@@ -1,0 +1,31 @@
+---
+title: "StatsQuest Notes"
+author: "Jason Kunisaki"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapse: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+```{r include = FALSE}
+image_dir <- "~/git/notes/statsquest/img/
+"
+```
+
+
+# Description
+This document contains notes taken from Josh Starmer's StatsQuest [Youtube channel](https://www.youtube.com/c/joshstarmer/videos?view=0&sort=da&flow=grid). 
+
+* The folder, **`r image_dir`** contains the images from the video that will be embedded in this document. 
+
+## R^2^ Explained
+```{r cars}
+summary(cars)
+```
+
