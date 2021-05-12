@@ -196,17 +196,103 @@ abline(mouse_regression, col = "blue")
 * Mutliple regression is fitting a **plane** (y = mx + pz + b) to the data where m and p are slopes
 * Calculating $R^2$ is the same for both simple and multiple regression
 * **NOTE:** Need to adjust $R^2$ for additional parameters in the "fit" equation
+  * $p_{fit} = 3$ for multiple regression with two variables to estimate a third variable
+* **Utility in comparing simple regression and multiple regression**
+  * Determine if it is necessary to collect a 2nd variable (tail length)
+  * use the same F-statistic calculation ***BUT:*** replace "mean stuff" with "simple regression stuff"
+    * Calculate sums of squared residuals around the simple regression line 
+    * Calculate sums of squared residuals around the multiple regression line
+  * $F = \frac{SS(simple) - SS(multiple)/(p_{multiple} - p_{simple})}{SS(multiple)/(n-p_{multiple})}$
+  
+  * If difference in $R^2$ values is large (and p-value is small) --> it was worth measuring the 3rd variable (i.e. tail length)
+![](img/Linear Models - Pt 1.5 Multiple Regression/Screen Shot 2021-04-10 at 7.14.42 PM.png)
+
+### t-tests and ANOVA
+* Performing **t-test** is similar to getting *sum of squared residuals* around "mean" and "fitted" line
+* **Step 1:** Ignore x-axis and find the overall mean of all data points
+* **Step 2:** Calculate SS(mean)
+* **Step 3:** Fit a line to the data
+  * For control data: $y = 1*2.2 + 0*3.6 + residual$
+  * For experimental data: $y = 0*2.2 + 1*3.6 + residual$
+  * Isolation of the 1's and 0's forms a ***design matrix*** (see the example) --> combine with abstract version of the equation to represent a "fit" to the data
+  * **The role of each column is assumed:** $y = mean_{control} + mean_{mutant}$
+* **Step 4:** Calculate SS(fit) --> sum of squared residuals around the fitted lines
+* **Step 5:** Plug values into F-statistic calculation as done above --> get p-value for the t-test
+
+* **ANOVA Analysis** --> tests if 2+ groups of data are significantly different 
+  * ANOVA requires the same fundamental steps as above 
+  * Add more columns to the **design matrix** when calculating the "fit" line
 
 
+#### {.tabset}
+##### Step 1
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.28.49 PM.png)
 
+##### Step 2
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.30.23 PM.png)
 
+##### Step 3
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.30.54 PM.png)
 
+##### Step 3 Example
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.48.15 PM.png)
 
+##### Step 3 Design Matrix
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.51.07 PM.png)
 
+##### Step 4: 
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.52.11 PM.png)
 
+##### t-test review
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.55.40 PM.png)
 
+##### ANOVA review
+![](img/t-test and ANOVA/Screen Shot 2021-04-10 at 7.58.13 PM.png)
 
+### Design Matrices
+* Used when calculating t-test statistic (see general principal above)
+* line of best fit: $y = mean_{control} + difference_{(mutant - control)}$
+* **NOTE:** 
+  * "control" and "mutant" measurements turn on $mean_{control}$
+  * Only "mutant" measurements turn on $difference_{mutant - control}$
+* Design matrix does not have to be 0's and 1's (see below)
 
+* ***Combine t-test and regression***
+  * Describe relationship b/w *mouse weight* and *mouse size*
+  * But we now have 2 different types of mice (red - ctr and green - mut)
+  * Mut mice and ctr mice follow different trends --> are these significantly different? 
+  * t-test alone: ignores relationship b/w weight and size
+  * linear regression alone: ignores difference between the two groups in size
+  * normal t-test compares means --> "regression" t-test compares lines of best fits b/w two groups 
+    * $y = (control-y-intercept) + (mutant-offset) + (slope)$
+    * Design matrix column values: 
+      * col1 = all 1 --> indicates both lines intercept y-axis at some point
+      * col2 = mutation samples = 1, others = 0
+      * col3 = weight data (i.e. x variable input)
+    * **SS(fancy)** = Calculate *sum of squared residuals* for each data point around its respective line
+    * **SS(simple)** = sum of squared residuals around the aggregate mean/aggregrate regression line (across all mouse groups)
+    * Calculate F-statistic --> p-value
+  
+#### {.tabset}
+##### Summary Slide
+![](img/Design Matrices/Screen Shot 2021-04-10 at 8.12.27 PM.png)
+
+##### Design matrix non- 0/1
+![](img/Design Matrices/Screen Shot 2021-04-10 at 8.19.19 PM.png)
+
+##### Combine t-test and regression
+![](img/Design Matrices/Screen Shot 2021-04-10 at 8.40.21 PM.png)
+
+##### Calculate sum of squared residuals (SS(fancy))
+![](img/Design Matrices/Screen Shot 2021-04-10 at 8.42.41 PM.png)
+
+##### Calculate F-statistic
+![](img/Design Matrices/Screen Shot 2021-04-10 at 8.45.25 PM.png)
+
+##### Example to account for batch effect
+* Essentially add a normalizing parameter that adjusts the data for the batch effect
+* Then perform similar analysis as above to determine significant differences b/w 2 groups across all replicates
+![](img/Design Matrices/Screen Shot 2021-04-10 at 8.50.28 PM.png)
 
 
 
