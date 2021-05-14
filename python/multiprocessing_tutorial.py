@@ -116,7 +116,7 @@ def process_image(img_name):
 
     img = img.filter(ImageFilter.GaussianBlur(15)) ## This is CPU bound
 
-    img.thumbnail(size)
+    img.thumbnail(size) ## This is CPU bound
     img.save(f'processed/{img_name}') ## This is IO bound
     print(f'{img_name} was processed...')
 
